@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/live_polling_system";
-
 export async function connectToDatabase() {
   try {
-    await mongoose.connect(MONGO_URL);
+    const mongoUrl = process.env.MONGO_URL;
+
+    if (!mongoUrl) {
+      throw new Error("MONGO_URL is not defined");
+    }
+
+    await mongoose.connect(mongoUrl);
     console.log("MongoDB connected successfully");
-  } catch (error) {
-    console.error("MongoDB connection failed");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
   }
 }
