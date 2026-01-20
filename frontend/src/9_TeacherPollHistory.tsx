@@ -23,7 +23,7 @@ function TeacherPollHistory() {
     setVisible(true);
 
     try {
-      const res = await fetch("http://localhost:4000/api/poll/history");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/poll/history`);
       if (!res.ok) throw new Error("Failed to fetch poll history");
       const data = await res.json();
       setPolls(data);

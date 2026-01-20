@@ -8,7 +8,11 @@ export function useSocket(
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const s = io("http://localhost:4000");
+    const s = io(import.meta.env.VITE_SOCKET_URL, {
+  withCredentials: true,
+  transports: ["websocket", "polling"]
+});
+
 
     setSocket(s);
 
