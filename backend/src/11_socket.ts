@@ -33,11 +33,15 @@ let pollTimeout: NodeJS.Timeout | null = null;
 ======================= */
 
 export function setupSocket(server: http.Server) {
-  const io = new Server(server, {
-    cors: {
-      origin: "http://localhost:5173"
-    }
-  });
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  transports: ["websocket", "polling"]
+});
+
 
   io.on("connection", async (socket) => {
     console.log("Socket connected:", socket.id);
